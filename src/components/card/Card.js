@@ -1,8 +1,10 @@
 import React from 'react';
 
-const Card = ({children})=>(
-  <div class="card" style={{width: '18rem'}}>
-    {children}
+const Card = ({children, className})=>(
+  <div className={className}>
+    <div className="card">
+      {children}
+    </div>
   </div>
 )
 
