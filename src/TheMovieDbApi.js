@@ -16,6 +16,12 @@ getPopularMovies = (page = 1) => (
    this.axios.get(`/movie/popular`, {
      params: {page: page}
    })
-); }
+)
 
-export default TheMovieDbApi
+getGenres = (page = 1) => (
+   this.axios.get(`/genre/movie/list`, {
+     params: {page: page}
+   })
+)}
+
+export default TheMovieDbApi;
