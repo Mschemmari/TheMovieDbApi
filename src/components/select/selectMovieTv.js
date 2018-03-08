@@ -42,7 +42,6 @@ class SelectMovieTv extends Component{
       const listOfGenres = this.state.genresList.map((genre, i) => (
         // <li className="breadcrumb-item" key={i}> Genre name: {genre.name} | Genre ID: {genre.id} </li>
           <option>{genre.name}</option>
-
       ))
 
       return (
