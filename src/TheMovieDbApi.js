@@ -9,19 +9,35 @@ class TheMovieDbApi {
      params: {
        api_key: API_KEY,
        language: 'es-AR',
-     },
-}) }
+         },
+    })
+  }
 
-getPopularMovies = (page = 1) => (
-   this.axios.get(`/movie/popular`, {
-     params: {page: page}
-   })
-)
-
-getGenres = (page = 1) => (
-   this.axios.get(`/genre/movie/list`, {
-     params: {page: page}
-   })
-)}
+  getPopularMovies = (page = 1) => (
+     this.axios.get(`/movie/popular`, {
+       params: {page: page}
+     })
+  )
+  getMoviesList = (page = 1) => (
+     this.axios.get(`/genre/movie/list`, {
+       params: {page: page}
+     })
+  )
+  getSeriesList = (page = 1) => (
+     this.axios.get(`/genre/tv/list`, {
+       params: {page: page}
+     })
+  )
+  getMovies = (page = 1) => (
+     this.axios.get(`/genre/movie/list`, {
+       params: {page: page}
+     })
+  )
+  getSeries = (page = 1) => (
+     this.axios.get(`/tv/popular`, {
+       params: {page: page}
+     })
+  )
+}
 
 export default TheMovieDbApi;

@@ -16,15 +16,12 @@ class App extends Component {
   }
   componentDidMount() {
     this.api.getPopularMovies().then(res => {
-      // console.log(res.data.results)
+      console.log(res.data.results)
       const items = res.data.results
       this.setState({
         items: [...items, this.state.items],
       });
     })
-
-
-
   }
   render() {
     this.state.items.pop() // la última posición que trae está vacia, por lo tanto hay que sacarla
