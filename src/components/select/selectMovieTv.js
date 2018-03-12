@@ -21,6 +21,9 @@ class SelectMovieTv extends Component{
 
   changeType = (event) => {
     console.log(event.target.value)
+    this.setState({
+      inputValue:event.target.value
+    })
     if(event.target.value === 'peliculas'){
       this.getMovies()
     }else{
@@ -55,35 +58,19 @@ class SelectMovieTv extends Component{
         })
   }
 
-  showMovies= (e) => {
-    this.api.getMovies().then(res => {
-          const items = res.data.genres
-          // const genre = genres.forEach();
-          items.map(item =>(
+  handleApi(){
+    this.api.getMoviesList().then(res => {
+          const genres = res.data.genres
+          // genres.map(genre =>(
             this.setState({
-              seriesList: [...items, this.state.items],
-              moviesList: [],
-              inputValue:e.target.value
+              moviesList: [...genres, this.state.genres],
+              seriesList: []
             })
-          ));
-          // console.log(this.state.seriesList);
+          // ));
+          console.log(this.state.moviesList);
         })
+  }
 
-      }
-    showSeries= (e) => {
-      this.api.getMovies().then(res => {
-            const items = res.data.genres
-            // const genre = genres.forEach();
-            items.map(item =>(
-              this.setState({
-                seriesList: [...items, this.state.items],
-                moviesList: [],
-                inputValue:e.target.value
-              })
-            ));
-            // console.log(this.state.seriesList);
-          })
-        }
 
   render() {
     this.state.moviesList.pop()
@@ -101,17 +88,17 @@ class SelectMovieTv extends Component{
           <option onSelect={this.getSeries} value="series">Series</option>
         </Select>
         {this.state.moviesList.length > 0 &&
-          <Select handleChange={this.showMovies} onChange={this.handleChange} value={this.state.inputValue}>
+          <Select handleChange={this.changeType} onChange={this.handleApi} value={this.state.inputValue}>
             {movie}
           </Select>
         }
         {this.state.seriesList.length > 0 &&
-          <Select handleChange={this.showSeries} onChange={this.handleApi} value={this.state.inputValue}>
+          <Select handleChange={this.changeType}  onChange={this.handleApi} value={this.state.inputValue}>
             {serie}
           </Select>
         }
 
-        <p>{this.state.inputValue}</p>
+        {/* <p>{this.state.inputValue}</p> */}
       </div>
       )
     }
