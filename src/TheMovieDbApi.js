@@ -28,15 +28,18 @@ class TheMovieDbApi {
        params: {page: page}
      })
   )
-  getMovies = (page = 1) => (
-     this.axios.get(`/genre/movie/list`, {
-       params: {page: page}
-     })
+  getMovies = (genre_id) => (
+    this.axios.get(`genre/${genre_id}/movies`, {
+      params: {genre_id: genre_id}
+    })
   )
   getSeries = (genre_id) => (
-     this.axios.get(`/tv/popular`, {
+     this.axios.get(`/tv/popular/${genre_id}`, {
        params: {genre_id: genre_id}
      })
+  )
+  getMovie = (movie_id) => (
+    this.axios.get(`/movie/${movie_id}`)
   )
 }
 

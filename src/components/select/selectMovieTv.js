@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 // import GenresList from '../../GenresList.js'
 import TheMovieDbApi from '../../TheMovieDbApi.js'
 import Select from './select.js'
+import Card, { CardBody, CardImg } from '../card'
+
 
 class SelectMovieTv extends Component{
   constructor() {
@@ -14,7 +16,8 @@ class SelectMovieTv extends Component{
       genreList: [],
       genreSelected: null,
       itemsList: [],
-      itemSelected: null
+      itemSelected: null,
+      items: []
     }
     console.log(this.state.inputValue)
   }
@@ -34,33 +37,6 @@ class SelectMovieTv extends Component{
       this.getSeries()
     }
   }
-  changeGenre = (event) => {
-    this.setState({
-      genreSelected: event.target.value,
-      itemsList: [],
-      itemSelected: null,
-    })
-    const genreId = event.target.value
-    this.api.getSeries(genreId).then(res => {
-          const genres = res.data.results
-          console.log(res.data);
-          // const genre = genres.forEach();
-          this.setState({
-            itemsList: genres
-          })
-          // console.log(this.state.seriesList);
-        })
-    this.api.getMovies(genreId).then(res => {
-          const genres = res.data.genres
-          console.log(res.data);
-          // const genre = genres.forEach();
-          this.setState({
-            itemsList: genres
-          })
-          // console.log(this.state.seriesList);
-        })
-
-  }
   getMovies(){
     this.api.getMoviesList().then(res => {
       const genres = res.data.genres
@@ -78,22 +54,43 @@ class SelectMovieTv extends Component{
           })
         })
   }
-  showMovies(){
-    console.log('pelis');
+  changeGenre = (event) => {
+    this.setState({
+      genreSelected: event.target.value,
+      itemsList: [],
+      itemSelected: null,
+    })
+    const genreId = event.target.value
+    this.api.getMovies(genreId).then(res => {
+          const genres = res.data.results
+          console.log(genres);
+          this.setState({
+            itemsList: genres
+          })
+        })
   }
-
-  showSeries(){
-    console.log('seriessss');
+  changeItem = (event) =>{
+    const itemSelected = event.target.value
+    this.api.getMovie(itemSelected).then(res => {
+          const item = res.data
+          console.log(item)
+          // const genre = genres.forEach();
+          this.setState({
+            itemSelected: itemSelected,
+            items: item
+          })
+        })
+        console.log(this.state.items);
   }
   render() {
-    this.state.moviesList.pop()
-    const movie = this.state.moviesList.map((genre, i) => (
-        <option  key={i} value={genre.name}>{genre.name}</option>
-    ))
-    this.state.seriesList.pop()
-    const serie = this.state.seriesList.map((genre, i) => (
-        <option key={i} value={genre.name}>{genre.name}</option>
-    ))
+    // this.state.moviesList.pop()
+    // const movie = this.state.itemList.map((genre, i) => (
+    // <option  key={i} value={genre.name}>{genre.name}</option>
+    // ))
+    // this.state.seriesList.pop()
+    // const serie = this.state.itemList.map((genre, i) => (
+    //     <option key={i} value={genre.name}>{genre.name}</option>
+    // ))
     return (
       <div>
         <Select handleChange={this.changeType} value={this.state.inputValue}>
@@ -112,23 +109,22 @@ class SelectMovieTv extends Component{
         {this.state.itemsList.length > 0 &&
           <Select handleChange={this.changeItem}>
             {this.state.itemsList.map(item => (
-              <option key={item.name} value={item.id}>{item.name}</option>
+              <option key={item.name} value={item.id}>{item.title}</option>
             ))}
           </Select>
         }
-
-        {this.state.moviesList.length > 0 &&
-          <Select handleChange={this.changeGenre}>
-            {movie}
-          </Select>
+        {this.state.items.map( (item, i) =>
+          <Card className="col-md-6 col-sm-12 col-xl-4" key={i}>
+               <CardImg src={'https://image.tmdb.org/t/p/w500'+item.backdrop_path}/>
+            <CardBody>
+              <h5 className="card-title">{item.title}</h5>
+              <p className="card-text">{item.overview}</p>
+            </CardBody>
+           </Card>
+        )
         }
-        {this.state.seriesList.length > 0 &&
-          <Select handleChange={this.changeItem} mostrar={this.showSeries}>
-            {serie}
-          </Select>
-        }
 
-        {/* <p>{this.state.inputValue}</p> */}
+          {/* <p>{this.state.inputValue}</p> */}
       </div>
       )
     }

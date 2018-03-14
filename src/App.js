@@ -24,26 +24,13 @@ class App extends Component {
   //   })
   // }
   render() {
-    // this.state.items.pop() // la última posición que trae está vacia, por lo tanto hay que sacarla
-    // const lista = this.state.items.map( (item, i) =>
-    //   <Card className="col-md-6 col-sm-12 col-xl-4" key={i}>
-    //     <CardImg src={'https://image.tmdb.org/t/p/w500'+item.backdrop_path}/>
-    //     <CardBody>
-    //       <h5 className="card-title">{item.title}</h5>
-    //       <p className="card-text">{item.overview}</p>
-    //       {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
-    //     </CardBody>
-    //   </Card>
 
-    // )
       return (
         <div className="container">
           <div className="row">
             <SelectMovieTv />
           </div>
-          {/* <div className="row"> */}
-            {/* {lista} */}
-         {/* </div> */}
+
         </div>
       )
     }
