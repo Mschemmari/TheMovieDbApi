@@ -18,8 +18,8 @@ class SelectMovieTv extends Component{
       itemsList: [],
       itemSelected: null,
       items: []
+
     }
-    console.log(this.state.inputValue)
   }
 
   changeType = (event) => {
@@ -74,23 +74,13 @@ class SelectMovieTv extends Component{
     this.api.getMovie(itemSelected).then(res => {
           const item = res.data
           console.log(item)
-          // const genre = genres.forEach();
           this.setState({
-            itemSelected: itemSelected,
             items: item
           })
         })
         console.log(this.state.items);
-  }
+     }
   render() {
-    // this.state.moviesList.pop()
-    // const movie = this.state.itemList.map((genre, i) => (
-    // <option  key={i} value={genre.name}>{genre.name}</option>
-    // ))
-    // this.state.seriesList.pop()
-    // const serie = this.state.itemList.map((genre, i) => (
-    //     <option key={i} value={genre.name}>{genre.name}</option>
-    // ))
     return (
       <div>
         <Select handleChange={this.changeType} value={this.state.inputValue}>
@@ -113,18 +103,16 @@ class SelectMovieTv extends Component{
             ))}
           </Select>
         }
-        {this.state.items.map( (item, i) =>
-          <Card className="col-md-6 col-sm-12 col-xl-4" key={i}>
-               <CardImg src={'https://image.tmdb.org/t/p/w500'+item.backdrop_path}/>
+        {this.state.loading && <div>Loading...</div>}
+        {this.state.items.length > 0 &&
+          <Card className="col-md-6 col-sm-12 col-xl-4">
+               <CardImg src={'https://image.tmdb.org/t/p/w500'+this.state.items.backdrop_path}/>
             <CardBody>
-              <h5 className="card-title">{item.title}</h5>
-              <p className="card-text">{item.overview}</p>
+              <h5 className="card-title">{this.state.items.title}</h5>
+              <p className="card-text">{this.state.items.overview}</p>
             </CardBody>
            </Card>
-        )
         }
-
-          {/* <p>{this.state.inputValue}</p> */}
       </div>
       )
     }

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import TheMovieDbApi from './TheMovieDbApi.js'
 import 'bootstrap/dist/css/bootstrap.css'
-import Card, { CardBody, CardImg } from './components/card'
 import SelectMovieTv from './components/select/selectMovieTv.js'
 
 
