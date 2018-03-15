@@ -17,8 +17,7 @@ class SelectMovieTv extends Component{
       genreSelected: null,
       itemsList: [],
       itemSelected: null,
-      items: []
-
+      item: null
     }
   }
 
@@ -63,7 +62,6 @@ class SelectMovieTv extends Component{
     const genreId = event.target.value
     this.api.getMovies(genreId).then(res => {
           const genres = res.data.results
-          console.log(genres);
           this.setState({
             itemsList: genres
           })
@@ -73,43 +71,44 @@ class SelectMovieTv extends Component{
     const itemSelected = event.target.value
     this.api.getMovie(itemSelected).then(res => {
           const item = res.data
-          console.log(item)
           this.setState({
-            items: item
+            item: item
           })
         })
-        console.log(this.state.items);
+
      }
+
   render() {
     return (
       <div>
-        <Select handleChange={this.changeType} value={this.state.inputValue}>
+        <Select handleChange={this.changeType} value={this.state.inputValue} defaultLabel="Seleccione tipo de coso">
           <option value="peliculas" >Peliculas</option>
           <option value="series">Series</option>
         </Select>
 
         {this.state.genreList.length > 0 &&
           <Select handleChange={this.changeGenre}>
-            {this.state.genreList.map(genre => (
-              <option key={genre.name} value={genre.id}>{genre.name}</option>
+            {this.state.genreList.map((genre, i) => (
+              <option key={i} value={genre.id}>{genre.name}</option>
             ))}
           </Select>
         }
 
         {this.state.itemsList.length > 0 &&
           <Select handleChange={this.changeItem}>
-            {this.state.itemsList.map(item => (
-              <option key={item.name} value={item.id}>{item.title}</option>
+            {this.state.itemsList.map((item, i) => (
+              <option key={i} value={item.id}>{item.title}</option>
             ))}
           </Select>
         }
         {this.state.loading && <div>Loading...</div>}
-        {this.state.items.length > 0 &&
+
+        {this.state.item &&
           <Card className="col-md-6 col-sm-12 col-xl-4">
-               <CardImg src={'https://image.tmdb.org/t/p/w500'+this.state.items.backdrop_path}/>
+               <CardImg src={'https://image.tmdb.org/t/p/w500'+this.state.item.backdrop_path}/>
             <CardBody>
-              <h5 className="card-title">{this.state.items.title}</h5>
-              <p className="card-text">{this.state.items.overview}</p>
+              <h5 className="card-title">{this.state.item.title}</h5>
+              <p className="card-text">{this.state.item.overview}</p>
             </CardBody>
            </Card>
         }
